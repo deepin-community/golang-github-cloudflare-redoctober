@@ -1,0 +1,23 @@
+Description: Fix compilation errors from using now-removed deprecated
+ Prometheus APIs.
+
+--- a/redoctober.go
++++ b/redoctober.go
+@@ -23,7 +23,7 @@
+ 	"github.com/cloudflare/redoctober/config"
+ 	"github.com/cloudflare/redoctober/core"
+ 	"github.com/coreos/go-systemd/activation"
+-	"github.com/prometheus/client_golang/prometheus"
++	"github.com/prometheus/client_golang/prometheus/promhttp"
+ )
+ 
+ // List of URLs to register and their related functions
+@@ -214,7 +214,7 @@
+ func initPrometheus() {
+ 	srv := &http.Server{
+ 		Addr:    net.JoinHostPort(cfg.Metrics.Host, cfg.Metrics.Port),
+-		Handler: prometheus.Handler(),
++		Handler: promhttp.Handler(),
+ 	}
+ 
+ 	log.Printf("metrics.init start: addr=%s", srv.Addr)
