@@ -1,0 +1,17 @@
+Description: Fix activation.Listeners() for systemd-go v17
+Author: Arnaud Rebillout <arnaud.rebillout@collabora.com>
+Bug: https://github.com/cloudflare/redoctober/issues/193
+Last-Update: 2018-09-14
+---
+This patch header follows DEP-3: http://dep.debian.net/deps/dep3/
+--- a/redoctober.go
++++ b/redoctober.go
+@@ -138,7 +138,7 @@
+ 
+ 	var lstnr net.Listener
+ 	if useSystemdSocket {
+-		listenFDs, err := activation.Listeners(true)
++		listenFDs, err := activation.Listeners()
+ 		if err != nil {
+ 			log.Fatal(err)
+ 		}
